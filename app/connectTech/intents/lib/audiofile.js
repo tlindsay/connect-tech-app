@@ -40,7 +40,7 @@ function getPlaylist(name) {
                     uri: URL,
                     headers: {
                         Accept: 'application/json',
-                        Authorization: bearerToken
+                        Authorization: 'Bearer BQDfN6ESM--qqja_888t0LymGX2dr1yllWhrh2WWufn1nnhFKQIfJiqt2mr8U0bfIdxpg7aIIy8oCgQm4ZyGfleG38KzHXRMHyllIsTdjheFO1Ol0PKYMRJDR11X3yM2oTiAk2LFLKcsmg'
                     },
                     transform: function (body) {
                         body = JSON.parse (body);

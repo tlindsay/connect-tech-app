@@ -48,7 +48,25 @@ let connectTech = function (app) {
   app.intent('audioPlayer', {
     slots: {NAME: 'NAME'}
   }, (request, response) => {
-
+    let name = request.slot('NAME');
+    return app.audiofiles.getPlaylist(name)
+      .then( (playlist) => {
+        console.log('playlist------', playlist.album.images[0]);
+        let track = playlist.preview_url,
+          trackName = playlist.name,
+          trackImage = playlist.album.images[0].url,
+          audioPlayerPayload = {
+            url: track,
+            token: trackName,
+            expectedPreviousToken: 'some_previous_token',
+            offsetInMilliseconds: 0
+          };
+        app.makeCard(trackName, response, trackImage);
+        console.log('response', JSON.stringify(response, null, 2));
+        return response.audioPlayerPlayStream('ENQUEUE', audioPlayerPayload).send();
+      } ).catch((error) => {
+        console.log('error', error);
+      });
   });
 
   /**
