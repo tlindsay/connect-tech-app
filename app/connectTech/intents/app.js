@@ -74,7 +74,7 @@ let connectTech = function (app) {
   app.intent('randomTrumpQuote', {}, (request, response) => {
     return app.trump.getRandomTrumpQuote().then((quote) => {
       console.log(quote);
-      return response.say(`Trump says: "${quote}". Can you believe he's the president?`);
+      return response.say(`Drumpf says: "${quote}". Can you believe he's the president?`);
     }).catch((error) => {
       console.log('error', error);
     });
@@ -86,7 +86,7 @@ let connectTech = function (app) {
     let subject = request.slot('NAME');
     return app.trump.getTrumpQuoteAbout(subject).then((quote) => {
       console.log(quote);
-      return response.say(`Trump says: "${quote}".`);
+      return response.say(`Drumpf says: "${quote}".`);
     }).catch((error) => {
       console.log('error', error);
     });
