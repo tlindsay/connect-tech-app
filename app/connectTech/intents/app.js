@@ -2,6 +2,7 @@
 const makeCard = require('./lib/makeCard.js'),
   ronSwansonApi = require('./lib/ronSwansonApi.js'),
   audiofiles = require('./lib/audiofile.js'),
+  trump = require('./lib/trump.js'),
   _ = require('lodash');
 
 /**
@@ -13,6 +14,7 @@ let connectTech = function (app) {
   app.makeCard = makeCard;
   app.ronSwansonApi = ronSwansonApi;
   app.audiofiles = audiofiles;
+  app.trump = trump;
   app._ = _;
 
   /**
@@ -68,6 +70,15 @@ let connectTech = function (app) {
         console.log('error', error);
       });
   });
+
+  app.intent('trumpQuote', {}, (request, response) => {
+    return app.trump.getRandomTrumpQuote().then((quote) => {
+      console.log(quote);
+      return response.say(`Trump says: "${quote}". Can you believe he's the president?`);
+    }).catch((error) => {
+      console.log('error', error);
+    });
+  })
 
   /**
    *  Amazon built-in intents:
