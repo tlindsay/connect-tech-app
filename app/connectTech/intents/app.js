@@ -71,14 +71,26 @@ let connectTech = function (app) {
       });
   });
 
-  app.intent('trumpQuote', {}, (request, response) => {
+  app.intent('randomTrumpQuote', {}, (request, response) => {
     return app.trump.getRandomTrumpQuote().then((quote) => {
       console.log(quote);
       return response.say(`Trump says: "${quote}". Can you believe he's the president?`);
     }).catch((error) => {
       console.log('error', error);
     });
-  })
+  });
+
+  app.intent('trumpQuoteAbout', {
+    slots: {NAME: 'NAME'}
+  }, (request, response) => {
+    let subject = request.slot('NAME');
+    return app.trump.getTrumpQuoteAbout(subject).then((quote) => {
+      console.log(quote);
+      return response.say(`Trump says: "${quote}".`);
+    }).catch((error) => {
+      console.log('error', error);
+    });
+  });
 
   /**
    *  Amazon built-in intents:

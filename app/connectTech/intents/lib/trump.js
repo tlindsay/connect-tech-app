@@ -4,9 +4,10 @@ const config = require('../../config/config'),
     request = require('request-promise');
 
 let api;
+let baseURL = 'https://api.tronalddump.io'
 
 function getRandomTrumpQuote() {
-  let URL = 'https://api.tronalddump.io/random/quote';
+  let URL = `${baseURL}/random/quote`;
   let options = {
     method: 'GET',
     uri: URL,
@@ -22,8 +23,25 @@ function getRandomTrumpQuote() {
   return request(options);
 }
 
+function getTrumpQuoteAbout(subject) {
+  let URL = `${baseURL}/search/quote?query=${encodeURI(subject)}`;
+  let options = {
+    method: 'GET',
+    uri: URL,
+    headers: {
+      Accept: 'application/json'
+    },
+    transform: function(body) {
+      body = JSON.parse(body);
+      return body._embedded.quotes[0].value;
+    }
+  };
+  return request(options)
+}
+
 api = {
-  getRandomTrumpQuote
+  getRandomTrumpQuote,
+  getTrumpQuoteAbout
 };
 
 module.exports = api;
